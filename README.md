@@ -68,6 +68,7 @@ volta --version
 ## 2. Setting the Node.js Version for Your Project
 
 You can set a specific Node.js version for your project by using the following command:
+
 volta pin node@<version>
 
 ## 3. Installing npm (Optional)
