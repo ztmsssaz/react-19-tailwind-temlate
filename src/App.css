@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
    font-family: 'Poppins';
@@ -20,8 +22,11 @@
    src: url('assets/fonts/poppins-latin-Bold.ttf') format('truetype');
    font-weight: 700;
 }
-@theme {
-   --spacing: 1px;
-   --default-font-family: 'Poppins', 'sans-serif';
-   --font-Poppins: 'Poppins';
+@layer components {
+   .buttons-link {
+      @apply mt-[25px] min-w-[90px] rounded border border-orange-900 bg-red-200 transition-colors hover:bg-sky-100 sm:min-w-[100px];
+   }
+   .isActive {
+      @apply bg-red-300 hover:border-red-500 hover:bg-red-400 hover:text-white;
+   }
 }
