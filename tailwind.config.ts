@@ -4,7 +4,6 @@ export default {
    theme: {
       container: {
          center: true, // enables mx-auto by default for .container
-         padding: '1rem', // optional, adds horizontal padding
          screens: {
             sm: '640px',
             md: '768px',
@@ -16,29 +15,30 @@ export default {
       fontFamily: {
          sans: ['Poppins', 'ui-sans-serif', 'system-ui'], // default for body text
       },
-      spacing: {
-         1: '1px',
-         2: '2px',
-         3: '3px',
-         4: '4px',
-         5: '5px',
-         6: '6px',
-         7: '7px',
-         8: '8px',
-         9: '9px',
-         10: '10px',
-         11: '11px',
-         12: '12px',
-         13: '13px',
-         14: '14px',
-         15: '15px',
-         16: '16px',
-         17: '17px',
-         18: '18px',
-         19: '19px',
-         20: '20px',
-      },
+
       extend: {
+         spacing: {
+            1: '1px',
+            2: '2px',
+            3: '3px',
+            4: '4px',
+            5: '5px',
+            6: '6px',
+            7: '7px',
+            8: '8px',
+            9: '9px',
+            10: '10px',
+            11: '11px',
+            12: '12px',
+            13: '13px',
+            14: '14px',
+            15: '15px',
+            16: '16px',
+            17: '17px',
+            18: '18px',
+            19: '19px',
+            20: '20px',
+         },
          borderRadius: {
             10: '10px',
             12: '12px',
