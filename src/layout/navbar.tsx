@@ -2,16 +2,22 @@ import { Button } from '@headlessui/react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useUserDispatch } from '../context/hooks'
 import { logout } from '../context/user-slice'
+import { useEffect } from 'react'
+import { googleLogout } from '@react-oauth/google'
 
 export default function Navbar() {
    const dispatch = useUserDispatch()
    const navigate = useNavigate()
 
    function handleLogOut() {
+      console.log('object')
       dispatch(logout())
-      navigate('/login')
+      googleLogout()
+      navigate('/login') 
    }
-
+   useEffect(()=>{
+      console.log('nav bar object')
+   },[])
    return (
       <>
          {location.pathname !== 'login' && (
@@ -34,7 +40,7 @@ export default function Navbar() {
                         }
                      >
                         Dashboard
-                     </NavLink>{' '}
+                     </NavLink>
                      |
                      <Button
                         onClick={handleLogOut}

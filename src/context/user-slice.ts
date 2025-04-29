@@ -29,6 +29,7 @@ export const userSlice = createSlice({
          }>
       ) {
          state = { ...action.payload }
+         console.log(state)
          localStorage.setItem('userData', JSON.stringify(action.payload))
       },
       logout(state) {

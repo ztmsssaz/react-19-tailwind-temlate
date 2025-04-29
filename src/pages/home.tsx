@@ -1,3 +1,5 @@
+import ExcelImport from "../components/importerxlsx"
+
 function Home() {
    return (
       <div className="font-Poppins p-15 flex flex-col rounded bg-purple-100">
@@ -8,6 +10,7 @@ function Home() {
          <p className="font-normal">Let's start coding!</p>
          <p className="font-medium">Let's start coding!</p>
          <p className="font-bold">Let's start coding!</p>
+         <ExcelImport />
       </div>
    )
 }

@@ -2,12 +2,27 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../context/user-slice'
 import { useUserDispatch } from '../../context/hooks'
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 function Login() {
    const navigate = useNavigate()
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
    const dispatch = useUserDispatch()
+
+   function sendData( data:{email:string,name:string,jti:string,iat:number}){
+      dispatch(
+         login({
+            name: data.name,
+            id: data.iat,
+            token: data.jti,
+         })
+      )
+      setTimeout(() => {
+         navigate('/')
+      }, 1000)
+   }
 
    const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault()
@@ -28,7 +43,7 @@ function Login() {
    }
 
    return (
-      <div className="flex min-h-[calc(100vh-100px)] items-center justify-center bg-gray-100 px-4">
+      <div className="flex flex-col min-h-[calc(100vh-100px)] items-center justify-center bg-gray-100 px-4">
          <div className="w-full max-w-md rounded-2xl bg-white p-20 shadow-xl">
             <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
                Login
@@ -68,6 +83,19 @@ function Login() {
                </button>
             </form>
          </div>
+       <div className='mt-5'>
+       <GoogleLogin
+        onSuccess={(credentialResponse:CredentialResponse) => {
+          console.log(credentialResponse);
+          // credentialResponse.credential => JWT Token
+          console.log((jwtDecode(credentialResponse.credential as string)))
+          sendData((jwtDecode(credentialResponse.credential as string)))
+        }}
+        onError={() => {
+          console.log('Login Failed');
+        }}
+      />
+       </div>
       </div>
    )
 }

@@ -33,6 +33,7 @@ const MainRouter = () => {
                      <Route path="/login" element={<Login />} />
                   </Route>
                   <Route path="*" element={<NotFound />} />
+                  <Route path="forms" element={<NotFound />} />
                </Routes>
             </Layout>
          </Suspense>
