@@ -1,110 +1,105 @@
-import   { useRef } from "react";
-import { jsPDF } from "jspdf";
+import DataTable from 'react-data-table-component'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import Papa from 'papaparse'
+//@ts-ignore
+import { vazirFont } from '../../public/assets/fonts/Vazirmatn-Regular-normal' // فقط ایمپورت برای اجرا، نه default
+import { useState } from 'react'
 
-const InvoiceTable = () => {
-  const tableRef = useRef(null);
+const MyTable = () => {
+   // داده تستی
+   const testData = [
+      { id: 1, name: 'علی', email: 'ali@example.com' },
+      { id: 2, name: 'زهرا', email: 'zahra@example.com' },
+      { id: 3, name: 'حسن', email: 'hasan@example.com' },
+   ]
+   // ستون‌ها
+   const columns: any = [
+      {
+         name: 'شناسه',
+         selector: (row: { id: any }) => row.id,
+         sortable: true,
+      },
+      {
+         name: 'زهرا',
+         selector: (row: { name: any }) => row.name,
+         sortable: true,
+      },
+      {
+         name: 'ایمیل',
+         selector: (row: { email: any }) => row.email,
+         sortable: true,
+      },
+   ]
+   const [selectedData, setSelectedData] = useState<any[]>(testData)
 
+   const exportCSV = () => {
+      console.log(selectedData)
+      const csv = Papa.unparse(selectedData.length ? selectedData : testData)
+      const blob = new Blob(['\uFEFF' + csv], {
+         type: 'text/csv;charset=utf-8;',
+      }) // \uFEFF = BOM
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.setAttribute('download', 'table.csv')
+      document.body.appendChild(link)
+      link.click()
+   }
 
+   const exportPDF = () => {
+      const doc = new jsPDF()
 
-  const generatePDF = async () => {
-    var doc = new jsPDF({ putOnlyUsedFonts: true})
-    const generateData = function(amount:number) {
-      var result = [];
-      var data:any = {
-        coin: "100",
-        game_group: `${doc.text("سلام",10,10)}`,
-        game_name: "XPTO2",
-        game_version: "25",
-        machine: "20485861",
-        vlt: "0"
-      };
-      for (var i = 0; i < amount; i += 1) {
-        console.log(doc.text("سلام",10,10))
-        data.id = (i + 1).toString();
-        result.push(Object.assign({}, data));j
-      }
-      return result;
-    };
-  
-    function createHeaders(keys:any) {
-      var result = [];
-      for (var i = 0; i < keys.length; i += 1) {
-        result.push({
-          id: keys[i],
-          name: keys[i],
-          prompt: keys[i],
-          width: 65,
-          align: "center",
-          padding: 0
-        });
-      }
-      return result;
-    }
-    const fontBinary = await fetch('/assets/fonts/Vazirmatn-Regular.ttf').then(res => res.arrayBuffer());
-    doc.addFileToVFS("Vazirmatn-Regular.ttf", btoa(String.fromCharCode(...new Uint8Array(fontBinary))));
-    doc.addFont("Vazirmatn-Regular.ttf", "Vazirmatn", "normal");
-    doc.setFont("Vazirmatn", "normal");
-   
+      // ثبت فونت
+      doc.addFileToVFS('Vazir.ttf', vazirFont)
+      doc.addFont('Vazir.ttf', 'Vazir', 'normal')
 
-    const headers:any = createHeaders([
-      "id",
-      "coin",
-      "game_group",
-      "game_name",
-      "game_version",
-      "machine",
-      "vlt"
-    ]);
-     doc.table(1, 1, generateData(100), headers, { autoSize: true });  
-      doc.save('a4.pdf')
-  };
- 
-  return (
-    <div>
-      <button onClick={generatePDF}>دانلود PDF</button>
+      // استفاده از فونت
+      doc.setFont('Vazir')
 
-      {/* جدول فاکتور */}
-      <table
-  ref={tableRef}
-  className="min-w-full divide-y divide-gray-700 bg-gray-900 rounded shadow-lg overflow-hidden"
->
-  <thead className="bg-gray-800">
-    <tr className="text-center">
-      <th className="px-5 py-10 text-center text-xs font-medium uppercase tracking-wider text-gray-300">
-        ID
-      </th>
-      <th className="px-5 py-10 text-center text-xs font-medium uppercase tracking-wider text-gray-300">
-       Product Name
-      </th>
-      <th className="px-5 py-10 text-center text-xs font-medium uppercase tracking-wider text-gray-300">
-        Price
-      </th>
-    </tr>
-  </thead>
-  <tbody className="divide-y divide-gray-700">
-    <tr className="hover:bg-gray-800">
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">1</td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
-        محصول 1
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
-        100,000 تومان
-      </td>
-    </tr>
-    <tr className="hover:bg-gray-800">
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">2</td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
-        محصول 2
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-200">
-        200,000 تومان
-      </td>
-    </tr>
-  </tbody>
-</table>
+      doc.setFontSize(14)
+      const sourceData = selectedData.length > 0 ? selectedData : testData
 
-    </div>
-  );
-};
+      autoTable(doc, {
+         head: [columns.map((col: { name: any }) => col.name)],
+         body: sourceData.map((row) =>
+            columns.map((col: any) => col.selector(row))
+         ),
+         headStyles: {
+            font: 'Vazir',
+            fontStyle: 'normal',
+         },
+         bodyStyles: {
+            font: 'Vazir',
+         },
+         styles: {
+            font: 'Vazir',
+         },
+         footStyles: {
+            font: 'Vazir',
+         },
+      })
+      doc.save('table.pdf')
+   }
 
-export default InvoiceTable;
+   return (
+      <div style={{ padding: 20 }}>
+         <h2>📋 جدول تستی</h2>
+         <DataTable
+            columns={columns}
+            data={testData}
+            selectableRows
+            pagination
+            highlightOnHover
+            onSelectedRowsChange={(e) => setSelectedData(e.selectedRows)}
+         />
+         <div style={{ marginTop: 10 }}>
+            <button onClick={exportCSV}>📤 خروجی CSV</button>
+            <button onClick={exportPDF} style={{ marginRight: 10 }}>
+               📄 خروجی PDF
+            </button>
+         </div>
+      </div>
+   )
+}
+
+export default MyTable
