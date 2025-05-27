@@ -2,7 +2,7 @@ import { Provider } from 'react-redux'
 import { store } from './context/store'
 import MainRouter from './router/router'
 import { useEffect } from 'react'
-import { registerPush } from '../public/push'
+import { registerPush } from './push'
 
 function App() {
    useEffect(() => {

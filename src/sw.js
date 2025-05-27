@@ -1,3 +1,5 @@
+import { precacheAndRoute } from 'workbox-precaching'
+
 self.addEventListener('push', function (event) {
    const data = event.data?.json() || {}
    const title = data.title || '📢 تست نوتیف'
@@ -9,3 +11,4 @@ self.addEventListener('push', function (event) {
 
    event.waitUntil(self.registration.showNotification(title, options))
 })
+precacheAndRoute(self.__WB_MANIFEST)
