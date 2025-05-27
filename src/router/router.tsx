@@ -4,7 +4,7 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router'
 import { PrivateRoute, PublicRoute } from './configs'
 import Layout from '../layout'
-import FallbackLoading from '../components/fallbackLoading'
+import FallbackLoading from '../components/fallBackLoading'
 import NotFound from '../pages/Error404'
 
 const Home = lazy(() => import('../pages/home'))
