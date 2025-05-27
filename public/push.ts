@@ -1,4 +1,5 @@
-const publicVapidKey = 'YOUR_PUBLIC_VAPID_KEY_FROM_BACKEND'
+const vapidPublicKey =
+   'BL4Bz-F0E5YPLQz_xfXFYlG4YSCGyUPZ3nIgpXIfAZxUBeMZp7pbNd7OABjBkAiTzLJjU4RJq6cFqtXVzUdzH3U'
 
 export async function registerPush() {
    if (!('serviceWorker' in navigator)) return
@@ -6,7 +7,7 @@ export async function registerPush() {
    const registration = await navigator.serviceWorker.register('/sw.js')
    const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+      applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
    })
 
    // ارسال subscription به سرور
