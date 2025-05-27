@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { PrivateRoute, PublicRoute } from './configs'
 import Layout from '../layout'
 import NotFound from '../pages/Error404'
-import FallbackLoading from '../components/fallBackLoading'
 
 const Home = lazy(() => import('../pages/home'))
 const Dashboard = lazy(() => import('../pages/dashboard'))
