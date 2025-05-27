@@ -43,6 +43,9 @@ export default defineConfig({
                },
             ],
          },
+         srcDir: 'src',
+         filename: 'sw.js', // دقیقا اسم فایل
+         strategies: 'injectManifest', // استفاده از فایل خودت
       }),
    ],
 })
