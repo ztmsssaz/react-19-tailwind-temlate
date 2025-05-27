@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { PrivateRoute, PublicRoute } from './configs'
 import Layout from '../layout'
 import NotFound from '../pages/Error404'
