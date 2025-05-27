@@ -15,7 +15,7 @@ const MainRouter = () => {
    // #ignore eslint
    return (
       <Router>
-         <Suspense fallback={<FallbackLoading />}>
+         <Suspense fallback={<h2>Loading...</h2>}>
             <Layout>
                <Routes>
                   <Route path="/" element={<PrivateRoute permission />}>
