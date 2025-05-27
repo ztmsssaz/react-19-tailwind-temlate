@@ -7,8 +7,8 @@ import Layout from '../layout'
 import NotFound from '../pages/Error404'
 
 const Home = lazy(() => import('../pages/home'))
-const Dashboard = lazy(() => import('../pages/dashboard'))
 const Login = lazy(() => import('../pages/auth/login'))
+const Dashboard = lazy(() => import('../pages/dashboard'))
 
 const MainRouter = () => {
    // #ignore eslint
