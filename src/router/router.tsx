@@ -20,13 +20,7 @@ const MainRouter = () => {
                <Routes>
                   <Route path="/" element={<PrivateRoute permission />}>
                      <Route path="/" element={<Home />} />
-                  </Route>
-
-                  <Route
-                     path="/dashboard"
-                     element={<PrivateRoute permission />}
-                  >
-                     <Route path="/dashboard" element={<Dashboard />} />
+                     <Route path="dashboard" element={<Dashboard />} />
                   </Route>
 
                   <Route path="/login" element={<PublicRoute />}>

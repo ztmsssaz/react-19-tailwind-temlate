@@ -2,9 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './App.css'
 import App from './App'
+import { loadRuntimeConfig } from './config/runtimeConfig'
 
-createRoot(document.getElementById('root')!).render(
-   <StrictMode>
-      <App />
-   </StrictMode>
-)
+loadRuntimeConfig().then(() => {
+   createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+         <App />
+      </StrictMode>
+   )
+})
